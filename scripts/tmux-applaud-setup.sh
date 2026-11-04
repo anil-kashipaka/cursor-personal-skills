@@ -42,21 +42,41 @@ new_win "native" "$PROJECTS_DIR/Applaud-native" 22
 new_win "loopback-mongo" "$PROJECTS_DIR/loopback-connector-mongodb" 22
 new_win "skills" "$PROJECTS_DIR/cursor-personal-skills" ""
 
-# --- applaud-serverless apps & packages (all dirs on disk) ---
+# --- applaud-serverless apps (all on disk except skip list) ---
+APP_SKIP=(analytics docgen letter-management voice)
+
+app_skipped() {
+  local name="$1"
+  local skip
+  for skip in "${APP_SKIP[@]}"; do
+    [[ "$name" == "$skip" ]] && return 0
+  done
+  return 1
+}
+
 if [[ -d "$SL/apps" ]]; then
   while IFS= read -r app; do
     [[ -n "$app" ]] || continue
+    app_skipped "$app" && continue
     new_win "$app" "$SL/apps/$app" 24
   done < <(find "$SL/apps" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
 fi
 
-if [[ -d "$SL/packages" ]]; then
-  while IFS= read -r pkg; do
-    [[ -n "$pkg" ]] || continue
-    # Avoid duplicate window name if same as an app (unlikely)
-    new_win "$pkg" "$SL/packages/$pkg" 24
-  done < <(find "$SL/packages" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
-fi
+# --- packages (allowlist only) ---
+PACKAGES=(
+  agent-tools-ui
+  applaud-infra
+  case-management-ui
+  integration-connections
+  workflow-ui
+  service-catalog-schema
+  conversation-ui
+  ui-primitives
+)
+
+for pkg in "${PACKAGES[@]}"; do
+  new_win "$pkg" "$SL/packages/$pkg" 24
+done
 
 tmux select-window -t "$SESSION_NAME:ui"
 tmux attach-session -t "$SESSION_NAME"

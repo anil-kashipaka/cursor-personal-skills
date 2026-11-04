@@ -19,7 +19,7 @@ chmod +x ~/applaud/cursor-personal-skills/scripts/tmux-applaud-setup.sh
 ~/applaud/cursor-personal-skills/scripts/tmux-applaud-setup.sh
 ```
 
-Creates session `applaud-workspace` with windows for each top-level repo under `~/applaud`, plus **every** `applaud-serverless/apps/*` and `packages/*` directory (discovered at run time). Missing paths are skipped so a partial clone still works. Override root with `PROJECTS_DIR=/path/to/applaud`.
+Creates session `applaud-workspace` with windows for each top-level repo under `~/applaud`, all `apps/*` except `analytics`, `docgen`, `letter-management`, and `voice`, and an allowlisted set of packages (see `scripts/tmux-applaud-setup.sh`). Missing paths are skipped. Override root with `PROJECTS_DIR=/path/to/applaud`.
 
 Optional: symlink instead of copy so updates flow from a single clone:
 
