@@ -35,7 +35,7 @@ new_win() {
 
 # --- Top-level repos (matches multi-root work under ~/applaud) ---
 new_win "ui" "$PROJECTS_DIR/applaud-ui-vue3" 22
-new_win "serverless" "$SL" 22
+new_win "serverless" "$SL" 24
 new_win "cloud" "$PROJECTS_DIR/applaud-cloud" 18
 new_win "anilworks" "$PROJECTS_DIR/anilworks" ""
 new_win "native" "$PROJECTS_DIR/Applaud-native" 22
@@ -46,7 +46,7 @@ new_win "skills" "$PROJECTS_DIR/cursor-personal-skills" ""
 if [[ -d "$SL/apps" ]]; then
   while IFS= read -r app; do
     [[ -n "$app" ]] || continue
-    new_win "$app" "$SL/apps/$app" 22
+    new_win "$app" "$SL/apps/$app" 24
   done < <(find "$SL/apps" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
 fi
 
@@ -54,7 +54,7 @@ if [[ -d "$SL/packages" ]]; then
   while IFS= read -r pkg; do
     [[ -n "$pkg" ]] || continue
     # Avoid duplicate window name if same as an app (unlikely)
-    new_win "$pkg" "$SL/packages/$pkg" 22
+    new_win "$pkg" "$SL/packages/$pkg" 24
   done < <(find "$SL/packages" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
 fi
 
