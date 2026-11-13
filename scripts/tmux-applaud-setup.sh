@@ -25,11 +25,11 @@ new_win() {
   else
     tmux new-window -t "$SESSION_NAME" -n "$name" -c "$dir"
   fi
-  sleep 0.3
-  if [[ -n "$node_version" ]] && command -v nvm >/dev/null 2>&1; then
-    tmux send-keys -t "$SESSION_NAME:$name" "nvm use $node_version" Enter
-  elif [[ -n "$node_version" ]]; then
-    tmux send-keys -t "$SESSION_NAME:$name" "# nvm use $node_version  # install nvm if needed" Enter
+  # macOS tmux shells often start before send-keys, and nvm is a function
+  # sourced from .zprofile — not a command visible to this bash script.
+  sleep 0.6
+  if [[ -n "$node_version" ]]; then
+    tmux send-keys -t "$SESSION_NAME:$name" "export NVM_DIR=\"\$HOME/.nvm\"; [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\"; nvm use $node_version" Enter
   fi
 }
 
@@ -59,7 +59,7 @@ if [[ -d "$SL/apps" ]]; then
     [[ -n "$app" ]] || continue
     app_skipped "$app" && continue
     new_win "$app" "$SL/apps/$app" 24
-  done < <(find "$SL/apps" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' 2>/dev/null | sort)
+  done < <(find "$SL/apps" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sort)
 fi
 
 # --- packages (allowlist only) ---
