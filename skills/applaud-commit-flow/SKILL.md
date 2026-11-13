@@ -11,6 +11,8 @@ Turns a set of already-staged code changes into a correctly formatted commit, th
 
 Trigger any time the user wants to commit, push, or "submit" work in an Applaud repo (`applaud-serverless`, `applaud-ui`, `applaud-cloud`, or similar), or mentions an AIA board ticket in the context of finishing up changes. Don't wait for the exact word "commit" — "ready to push this", "let's wrap this up", "submit this" all count.
 
+When the user says push, run lint on the edited files only. Do not start `eslint .` or `npm run lint:check` as the push lint. The pre-push-checks skill owns that step.
+
 ## Preconditions
 
 First, check whether the user needs a new branch. Run `git branch --show-current` — if they're already on a branch that looks purpose-built for this work (not `main`/`master`/`develop`), just confirm that's the one to use rather than re-asking. If they're on `main`/`master`/`develop`, or otherwise say they're starting new work, offer to create a branch.

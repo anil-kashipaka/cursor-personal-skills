@@ -6,9 +6,11 @@ Portable copy of Agent Skills from `~/.cursor/skills/` for Applaud workflow and 
 
 ```bash
 git clone https://github.com/anil-kashipaka/cursor-personal-skills.git
-mkdir -p ~/.cursor/skills
-cp -r cursor-personal-skills/skills/* ~/.cursor/skills/
+chmod +x cursor-personal-skills/scripts/setup-skills.sh
+cursor-personal-skills/scripts/setup-skills.sh
 ```
+
+That links every skill in this repo into `~/.cursor/skills/`, `~/.config/opencode/skills/`, and `~/.agents/skills/`, and writes the routing policy to `~/.config/opencode/AGENTS.md` and the parent workspace `AGENTS.md` when that parent is not a git repo.
 
 Restart Cursor (or start a new Agent chat) so skills are picked up.
 
@@ -21,16 +23,19 @@ chmod +x ~/applaud/cursor-personal-skills/scripts/tmux-applaud-setup.sh
 
 Creates session `applaud-workspace` with windows for each top-level repo under `~/applaud`, all `apps/*` except `analytics`, `docgen`, `letter-management`, and `voice`, and an allowlisted set of packages (see `scripts/tmux-applaud-setup.sh`). Missing paths are skipped. Override root with `PROJECTS_DIR=/path/to/applaud`.
 
-Optional: symlink instead of copy so updates flow from a single clone:
-
-```bash
-ln -s ~/path/to/cursor-personal-skills/skills/* ~/.cursor/skills/
-```
-
 ## Skills in this repo
 
 | Directory | Purpose |
 |-----------|---------|
+| `skill-routing` | Chooses `how`, `blast-radius`, `grill-with-docs`, `to-spec`, `tdd`, `improve-codebase-architecture`, `interrogate`, and `unslop` from the task |
+| `how` | Explain how a subsystem works |
+| `blast-radius` | Check what a change can break before editing it |
+| `grill-with-docs` | Interview a vague plan and write the docs as you go |
+| `to-spec` | Turn the current discussion into a spec |
+| `tdd` | Test-first implementation and bug fixes |
+| `improve-codebase-architecture` | Find and work through a structural cleanup |
+| `interrogate` | Adversarial review of a change |
+| `unslop` | Remove AI tells from writing |
 | `applaud-commit-flow` | Branch naming, commit message format, rebase, push, `gh pr` |
 | `pre-push-checks` | Format/lint/type-check/tests on edited files before push |
 | `setup-pre-commit` | Husky + lint-staged + Prettier + typecheck/test hook |
@@ -62,7 +67,7 @@ Each skill is a folder with `SKILL.md` (YAML frontmatter + markdown body). See [
 After editing skills under `~/.cursor/skills/`:
 
 ```bash
-cp -r ~/.cursor/skills/{applaud-commit-flow,pre-push-checks,setup-pre-commit,anilworks-context,ponytail} \
+cp -r ~/.cursor/skills/{skill-routing,how,blast-radius,grill-with-docs,to-spec,tdd,improve-codebase-architecture,interrogate,unslop,applaud-commit-flow,pre-push-checks,setup-pre-commit,anilworks-context,ponytail} \
   ~/applaud/cursor-personal-skills/skills/
 # Fix anilworks paths back to ~/applaud if you copied from live ~/.cursor/skills
 cd ~/applaud/cursor-personal-skills && git add -A && git commit -m "Sync skills from laptop" && git push

@@ -1,13 +1,17 @@
 ---
 name: pre-push-checks
-description: Runs format, lint, type-check, and tests on edited files before a commit or push. Use when the user is about to push, open or update a pull request, or says "push", "submit", or "ready to push" — including inside the Applaud commit flow, before git push.
+description: Runs format, lint, type-check, and tests on edited files before a commit or push. Use when the user is about to push, open or update a pull request, or says "push", "submit", or "ready to push" — including inside the Applaud commit flow, before git push. When the user says push, run lint on the edited files only.
 ---
 
 # Pre-push checks
 
+When the user says push, run lint on the edited files only.
+
 Run these checks on the files that will be pushed. Do not push, and do not open or update a PR, until they pass. If the Applaud commit flow is also in play, run this skill before `git commit` / `git push`.
 
 Do not skip the checks. Do not pass `--no-verify` unless the user explicitly asks for that in the same turn.
+
+Before every push, take the latest default branch. `git fetch origin`, then `git rebase origin/main` (or `origin/master` when that is the default). If the rebase conflicts, stop and report the files. If the branch was already pushed, update it with `--force-with-lease`, never a plain `--force`, and never force-push `main`.
 
 ## 1. Edited files
 
@@ -32,13 +36,15 @@ If Prettier rewrites a file, keep that rewrite in the commit. Do not format the 
 
 ## 3. Lint
 
-Lint only the edited files. From the repo root, when ESLint is configured at the root:
+When the user says push, run lint on the edited files only. Do not run `eslint .`, `npm run lint`, or `npm run lint:check` as the push check. Those lint the whole repo.
+
+From the repo root, when ESLint is configured at the root:
 
 ```bash
 npx eslint <files>
 ```
 
-When a package owns the ESLint config, run that package's `lint` script with the file paths relative to the package. Fix lint errors in the edited files before continuing. Do not add `eslint-disable` to silence a new violation.
+When a package owns the ESLint config, run ESLint on the edited paths from that package. Do not invoke the package `lint` script if it lints the whole package. Fix lint errors in the edited files before continuing. Do not add `eslint-disable` to silence a new violation.
 
 ## 4. Type-check
 
