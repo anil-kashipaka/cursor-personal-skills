@@ -1,11 +1,11 @@
 ---
 name: skill-routing
-description: Routes each task to the matching workflow skill before any action when the user does not name a /skill. Use for understanding code (how), impact checks (blast-radius), new or vague features (grill-with-docs then to-spec), implementation and bug fixes (tdd), refactoring (improve-codebase-architecture), and pre-PR or pre-commit review (interrogate then unslop).
+description: Routes each task to the matching workflow skill before any action when the user does not name a /skill. Use for understanding code (how), impact checks (blast-radius), new or vague features (grill-with-docs then to-spec), implementation and bug fixes (tdd), refactoring (improve-codebase-architecture), live UI verification (create-verification-skill then code-review), and pre-PR review (code-review, interrogate, then unslop).
 ---
 
 # Agent Skill Routing & Execution Policy
 
-You have access to 8 specialized workflow skills (`how`, `blast-radius`, `grill-with-docs`, `to-spec`, `tdd`, `improve-codebase-architecture`, `interrogate`, `unslop`).
+You have access to 10 specialized workflow skills (`how`, `blast-radius`, `grill-with-docs`, `to-spec`, `tdd`, `improve-codebase-architecture`, `code-review`, `create-verification-skill`, `interrogate`, `unslop`).
 
 ## Automatic Skill Selection Rule
 When the user asks you to perform a task **without** explicitly naming a `/skill`, automatically select and follow the matching skill(s) from the table below before taking action. Announce which skill you are activating in one brief line before proceeding.
@@ -17,7 +17,8 @@ When the user asks you to perform a task **without** explicitly naming a `/skill
 | **New feature or vague idea** ("build X", "let's add Y") | `grill-with-docs` -> `to-spec` | Requirements are ambiguous, span multiple files, or lack a written spec. |
 | **Writing code or fixing bugs** ("implement X", "fix bug Y") | `tdd` | Any task that creates or modifies application logic or behavior. |
 | **Refactoring or cleanup** ("clean up this module", "refactor X") | `improve-codebase-architecture` | User asks to restructure, modularize, or simplify existing architecture. |
-| **Pre-PR / pre-commit review** ("review my changes", "check this diff") | `interrogate` -> `unslop` | User asks to audit, review, or finalize code before committing or merging. |
+| **UI / full-stack live verification** ("verify the UI", "test the running app", "check user flow") | `create-verification-skill` -> `code-review` | User built UI or full-stack features that require live runtime/browser verification before PR. |
+| **Pre-PR / code diff review** ("review my PR", "verify this branch", "check my changes") | `code-review` -> `interrogate` -> `unslop` | User asks to verify a branch, check diff against specs/standards, or finalize before merging. |
 
 ## Execution Guardrails
 1. **Explicit overrides:** If the user explicitly invokes a `/skill`, follow that skill directly.

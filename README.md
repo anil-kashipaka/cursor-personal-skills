@@ -27,13 +27,15 @@ Creates session `applaud-workspace` with windows for each top-level repo under `
 
 | Directory | Purpose |
 |-----------|---------|
-| `skill-routing` | Chooses `how`, `blast-radius`, `grill-with-docs`, `to-spec`, `tdd`, `improve-codebase-architecture`, `interrogate`, and `unslop` from the task |
+| `skill-routing` | Chooses `how`, `blast-radius`, `grill-with-docs`, `to-spec`, `tdd`, `improve-codebase-architecture`, `code-review`, `create-verification-skill`, `interrogate`, and `unslop` from the task |
 | `how` | Explain how a subsystem works |
 | `blast-radius` | Check what a change can break before editing it |
 | `grill-with-docs` | Interview a vague plan and write the docs as you go |
 | `to-spec` | Turn the current discussion into a spec |
 | `tdd` | Test-first implementation and bug fixes |
 | `improve-codebase-architecture` | Find and work through a structural cleanup |
+| `code-review` | Review a branch or diff against the spec before merge |
+| `create-verification-skill` | Build a live check for a UI or full-stack user flow |
 | `interrogate` | Adversarial review of a change |
 | `unslop` | Remove AI tells from writing |
 | `applaud-commit-flow` | Branch naming, commit message format, rebase, push, `gh pr` |
@@ -66,7 +68,7 @@ Each skill is a folder with `SKILL.md` (YAML frontmatter + markdown body). See [
 After editing skills under `~/.cursor/skills/`:
 
 ```bash
-cp -r ~/.cursor/skills/{skill-routing,how,blast-radius,grill-with-docs,to-spec,tdd,improve-codebase-architecture,interrogate,unslop,applaud-commit-flow,pre-push-checks,anilworks-context,ponytail} \
+cp -r ~/.cursor/skills/{skill-routing,how,blast-radius,grill-with-docs,to-spec,tdd,improve-codebase-architecture,code-review,create-verification-skill,interrogate,unslop,applaud-commit-flow,pre-push-checks,anilworks-context,ponytail} \
   ~/applaud/cursor-personal-skills/skills/
 # Fix anilworks paths back to ~/applaud if you copied from live ~/.cursor/skills
 cd ~/applaud/cursor-personal-skills && git add -A && git commit -m "Sync skills from laptop" && git push
