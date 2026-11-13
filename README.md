@@ -38,7 +38,6 @@ Creates session `applaud-workspace` with windows for each top-level repo under `
 | `unslop` | Remove AI tells from writing |
 | `applaud-commit-flow` | Branch naming, commit message format, rebase, push, `gh pr` |
 | `pre-push-checks` | Format/lint/type-check/tests on edited files before push |
-| `setup-pre-commit` | Husky + lint-staged + Prettier + typecheck/test hook |
 | `anilworks-context` | Ticket journals under `~/applaud/anilworks/` |
 | `ponytail` | Lazy senior dev mode — simplest solution that works |
 
@@ -67,7 +66,7 @@ Each skill is a folder with `SKILL.md` (YAML frontmatter + markdown body). See [
 After editing skills under `~/.cursor/skills/`:
 
 ```bash
-cp -r ~/.cursor/skills/{skill-routing,how,blast-radius,grill-with-docs,to-spec,tdd,improve-codebase-architecture,interrogate,unslop,applaud-commit-flow,pre-push-checks,setup-pre-commit,anilworks-context,ponytail} \
+cp -r ~/.cursor/skills/{skill-routing,how,blast-radius,grill-with-docs,to-spec,tdd,improve-codebase-architecture,interrogate,unslop,applaud-commit-flow,pre-push-checks,anilworks-context,ponytail} \
   ~/applaud/cursor-personal-skills/skills/
 # Fix anilworks paths back to ~/applaud if you copied from live ~/.cursor/skills
 cd ~/applaud/cursor-personal-skills && git add -A && git commit -m "Sync skills from laptop" && git push
